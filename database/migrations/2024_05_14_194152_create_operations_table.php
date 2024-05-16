@@ -18,6 +18,8 @@ return new class extends Migration {
             );
             $table->integer('cost');
             $table->timestamps();
+
+            $table->unique('type');
         });
     }
 
