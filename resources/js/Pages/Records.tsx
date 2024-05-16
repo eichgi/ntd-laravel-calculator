@@ -26,7 +26,7 @@ export default function Records({auth}: PageProps) {
             }
 
             const response = await window.axios.get('/v1/operation', {params});
-            await setResponse(response.data);
+            setResponse(response.data);
         } catch (error: any) {
             alert(error.response.data.message);
         }
@@ -47,7 +47,8 @@ export default function Records({auth}: PageProps) {
     }
 
     const sortByHandler: ChangeEventHandler = async (e: ChangeEvent<HTMLSelectElement>) => {
-        await setOrder(e.target.value);
+        setOrder(e.target.value);
+        setPage(1);
     }
 
     const filterHandler = async () => {

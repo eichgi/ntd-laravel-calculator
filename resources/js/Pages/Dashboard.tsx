@@ -21,10 +21,10 @@ export default function Dashboard({auth}: PageProps) {
                 secondValue
             });
             console.warn(response);
-            await setResponse(response.data);
+            setResponse(response.data);
         } catch (error: any) {
             alert(error.response.data.message);
-            await setResponse({result: undefined});
+            setResponse({result: undefined});
         }
     }
 

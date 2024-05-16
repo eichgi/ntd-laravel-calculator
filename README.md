@@ -16,7 +16,6 @@
 `npm run dev`
 
 
-
 ### Tests
 There are integration tests and unit tests for the calculator API
 1. For unit tests run:
