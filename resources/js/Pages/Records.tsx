@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {PageProps} from '@/types';
-import {useEffect, useState} from "react";
+import {ChangeEvent, ChangeEventHandler, useEffect, useState} from "react";
 import {PaginatedResponse} from "../types/response";
 import DataItem from "../Components/DataItem";
 
@@ -27,7 +27,7 @@ export default function Records({auth}: PageProps) {
 
             const response = await window.axios.get('/v1/operation', {params});
             await setResponse(response.data);
-        } catch (error) {
+        } catch (error: any) {
             alert(error.response.data.message);
         }
     }
@@ -46,8 +46,16 @@ export default function Records({auth}: PageProps) {
         }
     }
 
-    const sortByHandler = async (e) => {
+    const sortByHandler: ChangeEventHandler = async (e: ChangeEvent<HTMLSelectElement>) => {
         await setOrder(e.target.value);
+    }
+
+    const filterHandler = async () => {
+        if (page !== 1) {
+            setPage(1);
+        } else {
+            await loadRecords();
+        }
     }
 
     return (
@@ -81,7 +89,7 @@ export default function Records({auth}: PageProps) {
                                             </div>
                                             <div className="md:w-1/3">
                                                 <button
-                                                    onClick={() => loadRecords()}
+                                                    onClick={() => filterHandler()}
                                                     className="shadow bg-green-700 hover:bg-green-800 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 ml-2"
                                                     type="button">
                                                     Filter

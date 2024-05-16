@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {PageProps} from '@/types';
-import {useState} from "react";
+import {FormEventHandler, useState} from "react";
 import {Operations} from "../types/operations";
 import {GenericResponse} from "../types/response";
 
@@ -12,7 +12,7 @@ export default function Dashboard({auth}: PageProps) {
     const [operationType, setOperationType] = useState<Operations>(Operations.ADDITION);
     const [response, setResponse] = useState<GenericResponse>({result: undefined});
 
-    const submitHandler = async (e) => {
+    const submitHandler: FormEventHandler = async (e) => {
         e.preventDefault();
         try {
             const response = await window.axios.post<GenericResponse>('/v1/operation', {
@@ -22,28 +22,24 @@ export default function Dashboard({auth}: PageProps) {
             });
             console.warn(response);
             await setResponse(response.data);
-        } catch (error) {
+        } catch (error: any) {
             alert(error.response.data.message);
             await setResponse({result: undefined});
         }
     }
 
-    const showFirstValue = (): boolean => {
-        return [Operations.ADDITION,
+    const showFirstValue: boolean = ([Operations.ADDITION,
             Operations.SUBTRACTION,
             Operations.MULTIPLICATION,
             Operations.DIVISION,
             Operations.SQUARE_ROOT
-        ].includes(operationType);
-    }
+        ] as unknown as Operations).includes(operationType);
 
-    const showSecondValue = (): boolean => {
-        return [Operations.ADDITION,
+    const showSecondValue: boolean = ([Operations.ADDITION,
             Operations.SUBTRACTION,
             Operations.MULTIPLICATION,
             Operations.DIVISION
-        ].includes(operationType);
-    }
+        ] as unknown as Operations).includes(operationType);
 
     return (
         <AuthenticatedLayout
@@ -73,7 +69,7 @@ export default function Dashboard({auth}: PageProps) {
                                             className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                             id="grid-state"
                                             value={operationType}
-                                            onChange={(e) => setOperationType(e.target.value)}
+                                            onChange={(e) => setOperationType(e.target.value as Operations)}
                                         >
                                             {Object.keys(Operations).map((operation, index) => (
                                                 <option key={index}>{operation}</option>
@@ -81,7 +77,7 @@ export default function Dashboard({auth}: PageProps) {
                                         </select>
                                     </div>
                                 </div>
-                                {showFirstValue() &&
+                                {showFirstValue &&
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2">
                                         Value
@@ -91,10 +87,10 @@ export default function Dashboard({auth}: PageProps) {
                                         id="username"
                                         type="number"
                                         value={firstValue}
-                                        onChange={(e) => setFirstValue(e.target.value)}/>
+                                        onChange={(e) => setFirstValue(+e.target.value)}/>
                                 </div>
                                 }
-                                {showSecondValue() &&
+                                {showSecondValue &&
                                 <div className="mb-6">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                                         Second Value
@@ -104,8 +100,7 @@ export default function Dashboard({auth}: PageProps) {
                                         id="password"
                                         type="number"
                                         value={secondValue}
-                                        onChange={(e) => setSecondValue(e.target.value)}/>
-                                    {/*<p className="text-red-500 text-xs italic">Please choose a password.</p>*/}
+                                        onChange={(e) => setSecondValue(+e.target.value)}/>
                                 </div>
                                 }
                                 <div className="flex items-center justify-between">
@@ -114,10 +109,6 @@ export default function Dashboard({auth}: PageProps) {
                                         type="submit">
                                         Get result
                                     </button>
-                                    {/*<a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                                       href="#">
-                                        Forgot Password?
-                                    </a>*/}
                                 </div>
                             </form>
 
