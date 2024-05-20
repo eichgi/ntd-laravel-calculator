@@ -45,7 +45,7 @@ export default function Dashboard({auth}: PageProps) {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2
-                className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Operations</h2>}
+                className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Calculator</h2>}
         >
             <Head title="Dashboard"/>
 

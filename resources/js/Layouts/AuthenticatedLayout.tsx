@@ -97,7 +97,10 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
+                            Calculator
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink href={route('operations')} active={route().current('operations')}>
+                            Operations
                         </ResponsiveNavLink>
                     </div>
 
