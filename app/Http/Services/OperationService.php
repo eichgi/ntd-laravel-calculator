@@ -24,7 +24,7 @@ class OperationService
                 operations::SUBTRACTION->name => $payload['firstValue'] - $payload['secondValue'],
                 operations::MULTIPLICATION->name => $payload['firstValue'] * $payload['secondValue'],
                 operations::DIVISION->name => $payload['firstValue'] / $payload['secondValue'],
-                operations::SQUARE_ROOT->name => sqrt($payload['firstValue']),
+                operations::SQUARE_ROOT->name => $payload['firstValue'] >= 0 ? sqrt($payload['firstValue']) : 0,
                 operations::RANDOM_STRING->name => $this->getRandomString(),
                 default => 0,
             };

@@ -62,4 +62,15 @@ class CalculatorTest extends TestCase
         $response = $this->operationService->calculate($payload);
         $this->assertEquals(0, $response);
     }
+
+    public function test_negative_square_roots_returns_zero()
+    {
+        $payload = [
+            'operationType' => operations::SQUARE_ROOT->name,
+            'firstValue' => -10,
+        ];
+
+        $response = $this->operationService->calculate($payload);
+        $this->assertEquals(0, $response);
+    }
 }
