@@ -29,17 +29,17 @@ export default function Dashboard({auth}: PageProps) {
     }
 
     const showFirstValue: boolean = ([Operations.ADDITION,
-            Operations.SUBTRACTION,
-            Operations.MULTIPLICATION,
-            Operations.DIVISION,
-            Operations.SQUARE_ROOT
-        ] as unknown as Operations).includes(operationType);
+        Operations.SUBTRACTION,
+        Operations.MULTIPLICATION,
+        Operations.DIVISION,
+        Operations.SQUARE_ROOT
+    ] as unknown as Operations).includes(operationType);
 
     const showSecondValue: boolean = ([Operations.ADDITION,
-            Operations.SUBTRACTION,
-            Operations.MULTIPLICATION,
-            Operations.DIVISION
-        ] as unknown as Operations).includes(operationType);
+        Operations.SUBTRACTION,
+        Operations.MULTIPLICATION,
+        Operations.DIVISION
+    ] as unknown as Operations).includes(operationType);
 
     return (
         <AuthenticatedLayout
@@ -51,7 +51,8 @@ export default function Dashboard({auth}: PageProps) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg flex justify-center">
+                    <div
+                        className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg flex justify-center">
 
                         <div className="w-full max-w-sm">
                             <form
@@ -114,6 +115,7 @@ export default function Dashboard({auth}: PageProps) {
 
                             <div className="bg-white shadow-md rounded px-8 p-6 mb-4">
                                 <p className="text-xl">{response?.result !== undefined ? `The result is ${response.result}` : ''}</p>
+                                {response?.message && (<p className="text-red-600">{response.message}</p>)}
                             </div>
                         </div>
 

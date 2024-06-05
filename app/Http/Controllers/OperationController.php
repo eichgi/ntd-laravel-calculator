@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\enums\operations;
 use App\Http\Requests\OperationRequest;
 use App\Http\Resources\RecordCollection;
 use App\Http\Services\OperationService;
@@ -22,6 +23,8 @@ class OperationController extends Controller
 
     public function calculate(OperationRequest $request): JsonResponse
     {
+        $message = "";
+
         try {
             // Authenticated user
             $user = $request->user();
@@ -45,7 +48,12 @@ class OperationController extends Controller
             // Update user's balance
             $this->userService->update(['balance' => $newBalance], $user->id);
 
-            return response()->json(['result' => $result]);
+            if ($request->operationType == operations::SQUARE_ROOT->name && $request->firstValue < 0
+                || $request->operationType == operations::DIVISION->name && $request->secondValue === 0) {
+                $message = "Invalid operation";
+            }
+
+            return response()->json(['result' => $result, 'message' => $message]);
         } catch (\Exception $exception) {
             app('log')->info($exception->getMessage());
             return response()->json(['result' => null, 'message' => $exception->getMessage()], 400);
